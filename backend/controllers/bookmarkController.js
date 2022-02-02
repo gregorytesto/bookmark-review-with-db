@@ -1,6 +1,6 @@
 const express = require("express");
 const bookmarks = express.Router();
-const { getAllBookmarks, getBookmark, createBookmark } = require("../queries/bookmarks.js");
+const { getAllBookmarks, getBookmark, createBookmark, deleteBookmark, updateBookmark } = require("../queries/bookmarks.js");
 const { checkName, checkFavorite } = require("../validations/checkBookmarks.js")
 
 bookmarks.get("/", async (req, res)=>{
@@ -30,7 +30,7 @@ bookmarks.get("/:id", async (req, res)=>{
     }
 })
 
-bookmarks.post("/", checkName, checkFavorite,  async (req, res)=>{
+bookmarks.post("/", async (req, res)=>{
     const { body } = req;
 
     // const { name, url, is_favorite, category } = req.body;
@@ -47,5 +47,25 @@ bookmarks.post("/", checkName, checkFavorite,  async (req, res)=>{
     }
 })
 
+bookmarks.delete("/:id", async(req, res)=>{
+    const { id } = req.params;
+    const deletedBookmark = await deleteBookmark(id);
+    if(deletedBookmark.id){
+        res.status(200).json(deletedBookmark);
+    } else {
+        res.status(404).json({error: "Bookmark not found"});
+    }
+})
+
+bookmarks.put("/:id", async(req, res)=>{
+    const { id } = req.params;
+    const { body } = req;
+    const updatedBookmark = await updateBookmark(id, body);
+    if(updatedBookmark.id){
+        res.status(200).json(updatedBookmark);
+    } else {
+        res.status(404).json({error: "Bookmark not found"});
+    }
+})
 
 module.exports = bookmarks;
