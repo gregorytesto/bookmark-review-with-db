@@ -6,10 +6,17 @@ const API = process.env.REACT_APP_API_URL;
 
 function BookmarkNewForm() {
   let navigate = useNavigate();
+  
+  const [bookmark, setBookmark] = useState({
+    name: "",
+    url: "",
+    category: "",
+    is_favorite: false,
+  });
 
-  const addBookmark = (newBookmark) => {
+  const addBookmark = () => {
     axios
-      .post(`${API}/bookmarks`, newBookmark)
+      .post(`${API}/bookmarks`, bookmark)
       .then(
         () => {
           navigate(`/bookmarks`);
@@ -19,12 +26,6 @@ function BookmarkNewForm() {
       .catch((c) => console.warn("catch", c));
   };
 
-  const [bookmark, setBookmark] = useState({
-    name: "",
-    url: "",
-    category: "",
-    is_favorite: false,
-  });
 
   const handleTextChange = (event) => {
     setBookmark({ ...bookmark, [event.target.id]: event.target.value });
@@ -36,7 +37,7 @@ function BookmarkNewForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    addBookmark(bookmark);
+    addBookmark();
   };
   return (
     <div className="New">
