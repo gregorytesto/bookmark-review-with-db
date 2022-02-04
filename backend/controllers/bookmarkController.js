@@ -3,6 +3,10 @@ const bookmarks = express.Router();
 const { getAllBookmarks, getBookmark, createBookmark, deleteBookmark, updateBookmark } = require("../queries/bookmarks.js");
 const { checkName, checkFavorite } = require("../validations/checkBookmarks.js")
 
+const reviewsController = require("./reviewsController.js");
+
+bookmarks.use("/:bookmarkId/reviews", reviewsController);
+
 bookmarks.get("/", async (req, res)=>{
     try{
         const allBookmarks = await getAllBookmarks();
