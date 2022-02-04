@@ -1,6 +1,6 @@
 const cors = require('cors');
 const express = require('express');
-
+const reviewsController = require("./controllers/reviewsController.js");
 const bookmarkController = require("./controllers/bookmarkController.js");
 
 const app = express();
@@ -14,6 +14,7 @@ app.get("/", (req, res)=>{
 })
 
 app.use("/bookmarks", bookmarkController);
+app.use("/reviews", reviewsController);
 
 app.get("*", (req, res) => {
   res.status(404).send("Page not found");
