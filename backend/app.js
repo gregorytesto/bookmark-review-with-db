@@ -1,7 +1,8 @@
-const cors = require('cors');
-const express = require('express');
+const cors = require("cors");
+const express = require("express");
 
 const bookmarkController = require("./controllers/bookmarkController.js");
+const reviewsController = require("./controllers/reviewsController.js");
 
 const app = express();
 
@@ -9,9 +10,9 @@ app.use(cors());
 app.use(express.json());
 require("dotenv").config();
 
-app.get("/", (req, res)=>{
-    res.send("Welcome to Bookmarks App 2.0");
-})
+app.get("/", (req, res) => {
+  res.send("Welcome to Bookmarks App 2.0");
+});
 
 app.use("/bookmarks", bookmarkController);
 
