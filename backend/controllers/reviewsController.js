@@ -11,8 +11,9 @@ const {
 
 // INDEX
 reviews.get("/", async (req, res) => {
-
-  const allReviews = await getAllReviews();
+  const { bookmarkId } = req.params;
+  console.log(bookmarkId);
+  const allReviews = await getAllReviews(bookmarkId);
   if (allReviews[0]) {
     res.status(200).json(allReviews);
   } else {
